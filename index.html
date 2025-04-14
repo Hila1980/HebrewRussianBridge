@@ -36,6 +36,7 @@
             margin-bottom: 10px;
         }
         
+        /* סגנון ללשוניות */
         .tab-container {
             display: flex;
             justify-content: center;
@@ -43,7 +44,7 @@
             flex-wrap: wrap;
         }
         
-        .tab {
+        .tab-button {
             padding: 10px 20px;
             background-color: #e0e0e0;
             border: none;
@@ -54,7 +55,7 @@
             transition: background-color 0.3s;
         }
         
-        .tab.active {
+        .tab-button.active {
             background-color: #4a6da7;
             color: white;
         }
@@ -81,7 +82,7 @@
         
         .letter-card {
             width: 100px;
-            height: 150px;
+            height: 120px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -107,23 +108,16 @@
         }
         
         .letter {
-            font-size: 40px;
+            font-size: 48px;
             font-weight: bold;
             color: #333;
+            margin-bottom: 5px;
         }
         
         .letter-example {
             font-size: 14px;
             color: #666;
-            margin-top: 5px;
             text-align: center;
-        }
-        
-        .image-example {
-            width: 30px;
-            height: 30px;
-            margin-top: 5px;
-            object-fit: contain;
         }
         
         .words-grid, .sentences-grid, .exercises-grid {
@@ -191,6 +185,137 @@
             border-top: 1px solid #e0e0e0;
         }
         
+        /* תרגול משופר */
+        .exercise-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .option {
+            padding: 8px 15px;
+            background-color: #e6e6e6;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #d9d9d9;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .match-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .match-item {
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            cursor: move;
+            user-select: none;
+        }
+        
+        .match-target {
+            min-height: 50px;
+            padding: 10px;
+            background-color: #e6e6e6;
+            border-radius: 8px;
+            border: 2px dashed #aaa;
+        }
+        
+        .match-target.highlight {
+            border-color: #4a6da7;
+            background-color: #f0f8ff;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            background-color: #4a6da7;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #4a6da7;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5a8a;
+        }
+        
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #c7c7c7;
+        }
+        
         /* תמיכה במסכים קטנים */
         @media (max-width: 768px) {
             .tab-container {
@@ -198,7 +323,7 @@
                 align-items: center;
             }
             
-            .tab {
+            .tab-button {
                 width: 80%;
                 margin: 5px 0;
                 text-align: center;
@@ -211,7 +336,7 @@
             
             .letter-card {
                 width: 80px;
-                height: 130px;
+                height: 100px;
             }
         }
     </style>
@@ -223,11 +348,12 @@
             <p>אתר ללימוד השפה העברית לעולים חדשים</p>
         </header>
         
+        <!-- לשוניות עם קלאס שונה לכפתורים -->
         <div class="tab-container">
-            <button class="tab active" onclick="openTab('alphabet')">אותיות</button>
-            <button class="tab" onclick="openTab('words')">מילים</button>
-            <button class="tab" onclick="openTab('sentences')">משפטים</button>
-            <button class="tab" onclick="openTab('exercises')">תרגול</button>
+            <button class="tab-button active" onclick="showTab('alphabet')">אותיות</button>
+            <button class="tab-button" onclick="showTab('words')">מילים</button>
+            <button class="tab-button" onclick="showTab('sentences')">משפטים</button>
+            <button class="tab-button" onclick="showTab('exercises')">תרגול</button>
         </div>
         
         <div id="alphabet" class="tab-content active">
@@ -242,128 +368,107 @@
                 </div>
                 <div class="letter-card" onclick="playSound('bet')">
                     <div class="letter">ב</div>
-                    <div class="letter-example">בַּיִת (בית)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="בית">
+                    <div class="letter-example">בֵּית</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('gimel')">
                     <div class="letter">ג</div>
-                    <div class="letter-example">גַּן (גן)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="גן">
+                    <div class="letter-example">גִּימֶל</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('dalet')">
                     <div class="letter">ד</div>
-                    <div class="letter-example">דָּג (דג)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="דג">
+                    <div class="letter-example">דָּלֶת</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('hey')">
                     <div class="letter">ה</div>
-                    <div class="letter-example">הַר (הר)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="הר">
+                    <div class="letter-example">הֵא</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('vav')">
                     <div class="letter">ו</div>
-                    <div class="letter-example">וָרֹד (ורוד)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="ורוד">
+                    <div class="letter-example">וָו</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('zayin')">
                     <div class="letter">ז</div>
-                    <div class="letter-example">זָהָב (זהב)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="זהב">
+                    <div class="letter-example">זַיִן</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('het')">
                     <div class="letter">ח</div>
-                    <div class="letter-example">חָתוּל (חתול)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="חתול">
+                    <div class="letter-example">חֵית</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('tet')">
                     <div class="letter">ט</div>
-                    <div class="letter-example">טוֹב (טוב)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="טוב">
+                    <div class="letter-example">טֵית</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('yod')">
                     <div class="letter">י</div>
-                    <div class="letter-example">יָד (יד)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="יד">
+                    <div class="letter-example">יוֹד</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('kaf')">
                     <div class="letter">כ</div>
-                    <div class="letter-example">כֶּלֶב (כלב)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="כלב">
+                    <div class="letter-example">כַּף</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('lamed')">
                     <div class="letter">ל</div>
-                    <div class="letter-example">לֶחֶם (לחם)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="לחם">
+                    <div class="letter-example">לָמֶד</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('mem')">
                     <div class="letter">מ</div>
-                    <div class="letter-example">מַיִם (מים)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="מים">
+                    <div class="letter-example">מֵם</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('nun')">
                     <div class="letter">נ</div>
-                    <div class="letter-example">נַעַל (נעל)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="נעל">
+                    <div class="letter-example">נוּן</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('samekh')">
                     <div class="letter">ס</div>
-                    <div class="letter-example">סֵפֶר (ספר)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="ספר">
+                    <div class="letter-example">סָמֶךְ</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('ayin')">
                     <div class="letter">ע</div>
-                    <div class="letter-example">עֵץ (עץ)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="עץ">
+                    <div class="letter-example">עַיִן</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('pe')">
                     <div class="letter">פ</div>
-                    <div class="letter-example">פֶּרַח (פרח)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="פרח">
+                    <div class="letter-example">פֵּה</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('tsadi')">
                     <div class="letter">צ</div>
-                    <div class="letter-example">צִפּוֹר (ציפור)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="ציפור">
+                    <div class="letter-example">צָדִי</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('qof')">
                     <div class="letter">ק</div>
-                    <div class="letter-example">קוֹף (קוף)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="קוף">
+                    <div class="letter-example">קוֹף</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('resh')">
                     <div class="letter">ר</div>
-                    <div class="letter-example">רֶגֶל (רגל)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="רגל">
+                    <div class="letter-example">רֵישׁ</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('shin')">
                     <div class="letter">ש</div>
-                    <div class="letter-example">שֶׁמֶשׁ (שמש)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="שמש">
+                    <div class="letter-example">שִׁין</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('tav')">
                     <div class="letter">ת</div>
-                    <div class="letter-example">תַּפּוּחַ (תפוח)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="תפוח">
+                    <div class="letter-example">תָּו</div>
                     <button class="sound-button">השמע</button>
                 </div>
             </div>
@@ -451,8 +556,13 @@
             
             <div class="exercises-grid">
                 <div class="exercise-card" onclick="openExercise('match-letters')">
-                    <h3>התאמת אותיות</h3>
-                    <p>התאימו את האותיות לתמונות המתאימות</p>
+                    <h3>התאמת אותיות לצלילים</h3>
+                    <p>האזינו לצליל והתאימו את האות המתאימה</p>
+                    <button class="sound-button">התחל</button>
+                </div>
+                <div class="exercise-card" onclick="openExercise('letter-quiz')">
+                    <h3>חידון אותיות</h3>
+                    <p>נחשו מהי האות המוצגת</p>
                     <button class="sound-button">התחל</button>
                 </div>
                 <div class="exercise-card" onclick="openExercise('word-game')">
@@ -460,10 +570,57 @@
                     <p>נחשו את המילה לפי התמונה</p>
                     <button class="sound-button">התחל</button>
                 </div>
-                <div class="exercise-card" onclick="openExercise('sentences-order')">
-                    <h3>סדר משפטים</h3>
-                    <p>סדרו את המילים במשפט בסדר הנכון</p>
-                    <button class="sound-button">התחל</button>
+            </div>
+            
+            <!-- חלק התרגול המשופר -->
+            <div id="exercise-container" class="exercise-container" style="display: none;">
+                <h3 id="exercise-title">תרגול</h3>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                
+                <!-- תרגיל התאמת אותיות לצלילים -->
+                <div id="match-letters-exercise" style="display: none;">
+                    <div class="question">
+                        <p>האזינו לצליל והתאימו את האות המתאימה:</p>
+                        <button id="play-sound-btn" class="btn btn-primary">השמע צליל</button>
+                        <div class="options" id="letter-options">
+                            <!-- אפשרויות האותיות יתווספו באמצעות JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- חידון אותיות -->
+                <div id="letter-quiz-exercise" style="display: none;">
+                    <div class="question">
+                        <p>מהי האות המוצגת?</p>
+                        <div id="quiz-letter" class="letter" style="font-size: 72px; text-align: center; margin: 20px 0;"></div>
+                        <div class="options" id="letter-name-options">
+                            <!-- אפשרויות שמות האותיות יתווספו באמצעות JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- משחק מילים -->
+                <div id="word-game-exercise" style="display: none;">
+                    <div class="question">
+                        <p>מהי המילה המתאימה לתמונה?</p>
+                        <img id="word-image" src="" alt="תמונה למשחק מילים" style="max-width: 200px; max-height: 200px; margin: 10px auto; display: block;">
+                        <div class="options" id="word-options">
+                            <!-- אפשרויות המילים יתווספו באמצעות JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="result" class="result">
+                    <h3>כל הכבוד!</h3>
+                    <p>סיימת את התרגיל בהצלחה!</p>
+                    <p id="score">ציון: <span id="score-value">0</span>%</p>
+                </div>
+                
+                <div class="btn-container">
+                    <button id="next-btn" class="btn btn-primary">הבא</button>
+                    <button id="back-btn" class="btn btn-secondary" onclick="closeExercise()">חזרה</button>
                 </div>
             </div>
         </div>
@@ -474,19 +631,28 @@
     </div>
 
     <script>
-        // פונקציה להחזרת שם הלשונית
-        function getTabName(tabId) {
-            switch(tabId) {
-                case 'alphabet':
-                    return 'אותיות';
-                case 'words':
-                    return 'מילים';
-                case 'sentences':
-                    return 'משפטים';
-                case 'exercises':
-                    return 'תרגול';
-                default:
-                    return '';
+        // פונקציה פשוטה למעבר בין לשוניות
+        function showTab(tabName) {
+            // מסתיר את כל התוכן
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // מסיר את המחלקה 'active' מכל הלשוניות
+            var tabs = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // מציג את התוכן הנבחר
+            document.getElementById(tabName).classList.add('active');
+            
+            // מחפש את הלשונית המתאימה לפי התוכן
+            for (var i = 0; i < tabs.length; i++) {
+                if (tabs[i].getAttribute('onclick').includes(tabName)) {
+                    tabs[i].classList.add('active');
+                }
             }
         }
         
@@ -513,7 +679,7 @@
                 // אותיות
                 'alef': 'אָלֶף',
                 'bet': 'בֵּית',
-                'gimel': 'גִימֶל',
+                'gimel': 'גִּימֶל',
                 'dalet': 'דָּלֶת',
                 'hey': 'הֵא',
                 'vav': 'וָו',
@@ -599,7 +765,407 @@
                 alert('שגיאה בהקראה. נא לנסות שוב מאוחר יותר.');
             }
         }
-
+        
+        // פונקציה לפתיחת תרגיל
+        function openExercise(exerciseId) {
+            // הסתרת רשימת התרגילים
+            document.querySelector('.exercises-grid').style.display = 'none';
+            
+            // הצגת מיכל התרגיל
+            const exerciseContainer = document.getElementById('exercise-container');
+            exerciseContainer.style.display = 'block';
+            
+            // עדכון כותרת התרגיל
+            const exerciseTitle = document.getElementById('exercise-title');
+            
+            // איפוס והסתרת כל התרגילים
+            document.getElementById('match-letters-exercise').style.display = 'none';
+            document.getElementById('letter-quiz-exercise').style.display = 'none';
+            document.getElementById('word-game-exercise').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            
+            // הצגת התרגיל הרצוי
+            switch(exerciseId) {
+                case 'match-letters':
+                    exerciseTitle.textContent = 'התאמת אותיות לצלילים';
+                    document.getElementById('match-letters-exercise').style.display = 'block';
+                    initMatchLettersExercise();
+                    break;
+                case 'letter-quiz':
+                    exerciseTitle.textContent = 'חידון אותיות';
+                    document.getElementById('letter-quiz-exercise').style.display = 'block';
+                    initLetterQuizExercise();
+                    break;
+                case 'word-game':
+                    exerciseTitle.textContent = 'משחק מילים';
+                    document.getElementById('word-game-exercise').style.display = 'block';
+                    initWordGameExercise();
+                    break;
+            }
+            
+            // איפוס פס ההתקדמות
+            document.getElementById('progress-bar').style.width = '0%';
+        }
+        
+        // פונקציה לסגירת תרגיל וחזרה לרשימת התרגילים
+        function closeExercise() {
+            document.getElementById('exercise-container').style.display = 'none';
+            document.querySelector('.exercises-grid').style.display = 'grid';
+        }
+        
+        // משתנים גלובליים לתרגילים
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        let currentExerciseData = [];
+        let currentSound = '';
+        
+        // נתוני תרגיל חידון אותיות
+        const letterQuizData = [
+            { letter: 'א', options: ['אָלֶף', 'בֵּית', 'גִּימֶל', 'דָּלֶת'], correct: 'אָלֶף' },
+            { letter: 'ב', options: ['אָלֶף', 'בֵּית', 'גִּימֶל', 'דָּלֶת'], correct: 'בֵּית' },
+            { letter: 'ג', options: ['אָלֶף', 'בֵּית', 'גִּימֶל', 'דָּלֶת'], correct: 'גִּימֶל' },
+            { letter: 'ד', options: ['אָלֶף', 'בֵּית', 'גִּימֶל', 'דָּלֶת'], correct: 'דָּלֶת' },
+            { letter: 'ה', options: ['הֵא', 'וָו', 'זַיִן', 'חֵית'], correct: 'הֵא' },
+            { letter: 'ו', options: ['הֵא', 'וָו', 'זַיִן', 'חֵית'], correct: 'וָו' },
+            { letter: 'ז', options: ['הֵא', 'וָו', 'זַיִן', 'חֵית'], correct: 'זַיִן' },
+            { letter: 'ח', options: ['הֵא', 'וָו', 'זַיִן', 'חֵית'], correct: 'חֵית' },
+            { letter: 'ט', options: ['טֵית', 'יוֹד', 'כַּף', 'לָמֶד'], correct: 'טֵית' },
+            { letter: 'י', options: ['טֵית', 'יוֹד', 'כַּף', 'לָמֶד'], correct: 'יוֹד' },
+            { letter: 'כ', options: ['טֵית', 'יוֹד', 'כַּף', 'לָמֶד'], correct: 'כַּף' },
+            { letter: 'ל', options: ['טֵית', 'יוֹד', 'כַּף', 'לָמֶד'], correct: 'לָמֶד' }
+        ];
+        
+        // נתוני תרגיל התאמת אותיות
+        const matchLettersData = [
+            { sound: 'alef', options: ['א', 'ב', 'ג', 'ד'], correct: 'א' },
+            { sound: 'bet', options: ['א', 'ב', 'ג', 'ד'], correct: 'ב' },
+            { sound: 'gimel', options: ['א', 'ב', 'ג', 'ד'], correct: 'ג' },
+            { sound: 'dalet', options: ['א', 'ב', 'ג', 'ד'], correct: 'ד' },
+            { sound: 'hey', options: ['ה', 'ו', 'ז', 'ח'], correct: 'ה' },
+            { sound: 'vav', options: ['ה', 'ו', 'ז', 'ח'], correct: 'ו' },
+            { sound: 'zayin', options: ['ה', 'ו', 'ז', 'ח'], correct: 'ז' },
+            { sound: 'het', options: ['ה', 'ו', 'ז', 'ח'], correct: 'ח' },
+            { sound: 'tet', options: ['ט', 'י', 'כ', 'ל'], correct: 'ט' },
+            { sound: 'yod', options: ['ט', 'י', 'כ', 'ל'], correct: 'י' },
+            { sound: 'kaf', options: ['ט', 'י', 'כ', 'ל'], correct: 'כ' },
+            { sound: 'lamed', options: ['ט', 'י', 'כ', 'ל'], correct: 'ל' }
+        ];
+        
+        // פונקציה לאתחול תרגיל התאמת אותיות לצלילים
+        function initMatchLettersExercise() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            currentExerciseData = matchLettersData.slice(); // העתק של המערך המקורי
+            totalQuestions = currentExerciseData.length;
+            
+            // ערבוב המערך
+            shuffleArray(currentExerciseData);
+            
+            showNextMatchLettersQuestion();
+        }
+        
+        // פונקציה להצגת השאלה הבאה בתרגיל התאמת אותיות
+        function showNextMatchLettersQuestion() {
+            if (currentQuestionIndex >= totalQuestions) {
+                showResult();
+                return;
+            }
+            
+            const question = currentExerciseData[currentQuestionIndex];
+            currentSound = question.sound;
+            
+            // יצירת אפשרויות
+            const optionsContainer = document.getElementById('letter-options');
+            optionsContainer.innerHTML = '';
+            
+            // ערבוב אפשרויות התשובה
+            const shuffledOptions = question.options.slice();
+            shuffleArray(shuffledOptions);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = function() {
+                    checkMatchLettersAnswer(option, question.correct);
+                };
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // עדכון פס ההתקדמות
+            document.getElementById('progress-bar').style.width = 
+                ((currentQuestionIndex / totalQuestions) * 100) + '%';
+            
+            // הפעלת הקול אוטומטית בטעינת השאלה
+            setTimeout(() => {
+                playSound(currentSound);
+            }, 500);
+            
+            // התקנת מאזין לכפתור השמעת הצליל
+            document.getElementById('play-sound-btn').onclick = function() {
+                playSound(currentSound);
+            };
+        }
+        
+        // פונקציה לבדיקת תשובה בתרגיל התאמת אותיות
+        function checkMatchLettersAnswer(selectedOption, correctOption) {
+            const optionsContainer = document.getElementById('letter-options');
+            const options = optionsContainer.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                option.onclick = null; // ביטול אירועי לחיצה
+                
+                if (option.textContent === correctOption) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedOption && selectedOption !== correctOption) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedOption === correctOption) {
+                correctAnswers++;
+            }
+            
+            // עיכוב לפני המעבר לשאלה הבאה
+            setTimeout(() => {
+                currentQuestionIndex++;
+                options.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                });
+                showNextMatchLettersQuestion();
+            }, 1500);
+        }
+        
+        // פונקציה לאתחול חידון אותיות
+        function initLetterQuizExercise() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            currentExerciseData = letterQuizData.slice(); // העתק של המערך המקורי
+            totalQuestions = currentExerciseData.length;
+            
+            // ערבוב המערך
+            shuffleArray(currentExerciseData);
+            
+            showNextLetterQuizQuestion();
+        }
+        
+        // פונקציה להצגת השאלה הבאה בחידון אותיות
+        function showNextLetterQuizQuestion() {
+            if (currentQuestionIndex >= totalQuestions) {
+                showResult();
+                return;
+            }
+            
+            const question = currentExerciseData[currentQuestionIndex];
+            
+            // הצגת האות
+            document.getElementById('quiz-letter').textContent = question.letter;
+            
+            // יצירת אפשרויות
+            const optionsContainer = document.getElementById('letter-name-options');
+            optionsContainer.innerHTML = '';
+            
+            // ערבוב אפשרויות התשובה
+            const shuffledOptions = question.options.slice();
+            shuffleArray(shuffledOptions);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = function() {
+                    checkLetterQuizAnswer(option, question.correct);
+                };
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // עדכון פס ההתקדמות
+            document.getElementById('progress-bar').style.width = 
+                ((currentQuestionIndex / totalQuestions) * 100) + '%';
+        }
+        
+        // פונקציה לבדיקת תשובה בחידון אותיות
+        function checkLetterQuizAnswer(selectedOption, correctOption) {
+            const optionsContainer = document.getElementById('letter-name-options');
+            const options = optionsContainer.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                option.onclick = null; // ביטול אירועי לחיצה
+                
+                if (option.textContent === correctOption) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedOption && selectedOption !== correctOption) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedOption === correctOption) {
+                correctAnswers++;
+            }
+            
+            // עיכוב לפני המעבר לשאלה הבאה
+            setTimeout(() => {
+                currentQuestionIndex++;
+                options.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                });
+                showNextLetterQuizQuestion();
+            }, 1500);
+        }
+        
+        // פונקציה לאתחול משחק מילים
+        function initWordGameExercise() {
+            // נתונים קבועים למשחק המילים (בהמשך אפשר להחליף עם נתונים דינמיים)
+            const wordGameData = [
+                {
+                    word: 'בַּיִת',
+                    translation: 'Дом',
+                    image: '/api/placeholder/200/200', // יש להחליף בנתיב תמונה אמיתי
+                    options: ['בַּיִת', 'מַיִם', 'לֶחֶם', 'סֵפֶר'],
+                    correct: 'בַּיִת',
+                    sound: 'word-house'
+                },
+                {
+                    word: 'מַיִם',
+                    translation: 'Вода',
+                    image: '/api/placeholder/200/200', // יש להחליף בנתיב תמונה אמיתי
+                    options: ['בַּיִת', 'מַיִם', 'לֶחֶם', 'סֵפֶר'],
+                    correct: 'מַיִם',
+                    sound: 'word-water'
+                },
+                {
+                    word: 'לֶחֶם',
+                    translation: 'Хлеб',
+                    image: '/api/placeholder/200/200', // יש להחליף בנתיב תמונה אמיתי
+                    options: ['בַּיִת', 'מַיִם', 'לֶחֶם', 'סֵפֶר'],
+                    correct: 'לֶחֶם',
+                    sound: 'word-bread'
+                },
+                {
+                    word: 'סֵפֶר',
+                    translation: 'Книга',
+                    image: '/api/placeholder/200/200', // יש להחליף בנתיב תמונה אמיתי
+                    options: ['בַּיִת', 'מַיִם', 'לֶחֶם', 'סֵפֶר'],
+                    correct: 'סֵפֶר',
+                    sound: 'word-book'
+                }
+            ];
+            
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            currentExerciseData = wordGameData.slice(); // העתק של המערך המקורי
+            totalQuestions = currentExerciseData.length;
+            
+            // ערבוב המערך
+            shuffleArray(currentExerciseData);
+            
+            showNextWordGameQuestion();
+        }
+        
+        // פונקציה להצגת השאלה הבאה במשחק מילים
+        function showNextWordGameQuestion() {
+            if (currentQuestionIndex >= totalQuestions) {
+                showResult();
+                return;
+            }
+            
+            const question = currentExerciseData[currentQuestionIndex];
+            
+            // הצגת התמונה
+            document.getElementById('word-image').src = question.image;
+            document.getElementById('word-image').alt = question.translation;
+            
+            // יצירת אפשרויות
+            const optionsContainer = document.getElementById('word-options');
+            optionsContainer.innerHTML = '';
+            
+            // ערבוב אפשרויות התשובה
+            const shuffledOptions = question.options.slice();
+            shuffleArray(shuffledOptions);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = function() {
+                    checkWordGameAnswer(option, question.correct);
+                };
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // עדכון פס ההתקדמות
+            document.getElementById('progress-bar').style.width = 
+                ((currentQuestionIndex / totalQuestions) * 100) + '%';
+            
+            // הפעלת הקול אוטומטית בטעינת השאלה
+            setTimeout(() => {
+                if (question.sound) {
+                    playSound(question.sound);
+                }
+            }, 500);
+        }
+        
+        // פונקציה לבדיקת תשובה במשחק מילים
+        function checkWordGameAnswer(selectedOption, correctOption) {
+            const optionsContainer = document.getElementById('word-options');
+            const options = optionsContainer.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                option.onclick = null; // ביטול אירועי לחיצה
+                
+                if (option.textContent === correctOption) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedOption && selectedOption !== correctOption) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedOption === correctOption) {
+                correctAnswers++;
+            }
+            
+            // עיכוב לפני המעבר לשאלה הבאה
+            setTimeout(() => {
+                currentQuestionIndex++;
+                options.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                });
+                showNextWordGameQuestion();
+            }, 1500);
+        }
+        
+        // פונקציה להצגת תוצאות התרגיל
+        function showResult() {
+            // הסתרת כל התרגילים
+            document.getElementById('match-letters-exercise').style.display = 'none';
+            document.getElementById('letter-quiz-exercise').style.display = 'none';
+            document.getElementById('word-game-exercise').style.display = 'none';
+            
+            // חישוב הציון
+            const score = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // עדכון תצוגת התוצאה
+            document.getElementById('score-value').textContent = score;
+            document.getElementById('result').style.display = 'block';
+            
+            // עדכון פס ההתקדמות
+            document.getElementById('progress-bar').style.width = '100%';
+            
+            // עדכון כפתור הבא לחזרה לתפריט התרגילים
+            document.getElementById('next-btn').textContent = 'סיום';
+            document.getElementById('next-btn').onclick = closeExercise;
+        }
+        
+        // פונקציה מסייעת לערבוב מערך
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
         // יוזמה של טעינת קולות בטעינת העמוד
         function initVoices() {
             if ('speechSynthesis' in window) {
@@ -614,44 +1180,19 @@
                 }
             }
         }
-
-        // פונקציה לפתיחת תרגיל
-        function openExercise(exerciseId) {
-            alert(`התרגיל "${exerciseId}" ייפתח בקרוב...`);
-            // כאן יהיה הקוד שמעביר לתרגיל הספציפי
-        }
-
-        function openTab(tabName) {
-            // מסתיר את כל התוכן
-            var tabContents = document.getElementsByClassName('tab-content');
-            for (var i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
-            }
-            
-            // מסיר את המחלקה 'active' מכל הלשוניות
-            var tabs = document.getElementsByClassName('tab');
-            for (var i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
-            
-            // מציג את התוכן הנבחר
-            document.getElementById(tabName).classList.add('active');
-            
-            // מוצא את הלשונית המתאימה ומוסיף לה את המחלקה 'active'
-            for (var i = 0; i < tabs.length; i++) {
-                if (tabs[i].textContent === getTabName(tabName)) {
-                    tabs[i].classList.add('active');
-                }
-            }
-        }
         
         // אתחול הדף בטעינה
         document.addEventListener('DOMContentLoaded', function() {
             // אתחול הקולות
             initVoices();
             
-            // הגדרת הלשונית הראשונה כפעילה
-            openTab('alphabet');
+            // הגדרת כפתור "הבא" בתרגיל
+            document.getElementById('next-btn').onclick = function() {
+                // במקרה שהתרגיל הסתיים, חזרה לתפריט
+                if (currentQuestionIndex >= totalQuestions) {
+                    closeExercise();
+                }
+            };
         });
     </script>
 </body>
